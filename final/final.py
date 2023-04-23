@@ -22,8 +22,7 @@ def getBest(roles):
       best = role
   return roles.indexOf(best)
 
-def monteCarlo(roles):
-  epsilon = .1
+def monteCarlo(roles, epsilon):
   # do explore exploit step
 
   # get action
@@ -51,10 +50,11 @@ def bayseianUpdating(actualVal, priorProb):
     return posteriorProb
 
 def loop(data):
+  epsilon = .01
   done = False
   while not done:
     # get role to play
-    action = monteCarlo(data.roles)
+    action = monteCarlo(data.roles, epsilon)
     role = data.roles[action]
     print(f"For your next game queue {role.name}")
 
@@ -64,8 +64,12 @@ def loop(data):
 
     # use bayseian to update model
     posteriorProb = bayseianUpdating(happiness, role.priorProb)
+    
     # update file
+    newAvg = (role.n * role.avgHappy + happiness) / role.n + 1
     role.priorProb = posteriorProb
+    role.avgHappy = newAvg
+    role.n += 1
     updateFile(data)
 
     # call again

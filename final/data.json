@@ -3,21 +3,21 @@
     {
       "role" : "Tank",
       "avgHappy": 0,
-      "priorProb: .5,
+      "priorProb": 0.5,
       "n": 0
     },
     {
       "role" : "Dps",
       "avgHappy": 0,
-      "priorProb: .5,
+      "priorProb": 0.5,
       "n": 0
     },
     {
       "role" : "Support",
       "avgHappy": 0,
-      "priorProb: .5,
+      "priorProb": 0.5,
       "n": 0
-    },
+    }
   ],
   "history": []
 }
