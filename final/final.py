@@ -18,9 +18,9 @@ import numpy as np
 def getBest(roles):
   best = roles[0]
   for role in roles:
-    if role.avgHappy * role.priorProb > best.avgHappy * best.priorProb:
+    if role['avgHappy'] * role['priorProb'] > best['avgHappy'] * best['priorProb']:
       best = role
-  return roles.indexOf(best)
+  return roles.index(best)
 
 def monteCarlo(roles, epsilon):
   # do explore exploit step
@@ -45,46 +45,73 @@ def bayseianUpdating(actualVal, priorProb):
     # Compute posterior probability
     numerator = likelihood * priorProb
     denominator = numerator + (1 - priorProb) * (1 - likelihood)
+    print(numerator)
+    print(1 - priorProb)
+    print(1 - likelihood)
+    print((1 - priorProb) * (1 - likelihood))
+    print(numerator + (1 - priorProb) * (1 - likelihood))
     posteriorProb = numerator / denominator
 
     return posteriorProb
 
-def loop(data):
+def updatingLoop(data, ct):
   epsilon = .01
   done = False
   while not done:
     # get role to play
-    action = monteCarlo(data.roles, epsilon)
-    role = data.roles[action]
-    print(f"For your next game queue {role.name}")
+    action = monteCarlo(data['roles'], epsilon)
+    role = data['roles'][action]
+    print(f"For your next game queue {role['role']}")
 
     # wait for reported happyness
     #TODO: validate input
-    happiness = input("Enter happiness from last match")
+    valid = False
+    while not valid:
+      happiness = input("Enter happiness from last match: ")
+      if happiness.isnumeric():
+        happiness = float(happiness)
+        if happiness >= 0 and happiness <= 10:
+          valid = True
+        else:
+          print("Please enter a number between 0 and 10")
+      else:
+        print("Please enter a number")
 
     # use bayseian to update model
-    posteriorProb = bayseianUpdating(happiness, role.priorProb)
+    posteriorProb = bayseianUpdating(happiness, role['priorProb'])
     
     # update file
-    newAvg = (role.n * role.avgHappy + happiness) / role.n + 1
-    role.priorProb = posteriorProb
-    role.avgHappy = newAvg
-    role.n += 1
+    newAvg = (role['n'] * role['avgHappy'] + happiness) / (role['n'] + 1)
+    role['priorProb'] = posteriorProb
+    role['avgHappy'] = newAvg
+    role['n'] += 1
+    data['roles'][action] = role
+
+    if ct >= 100:
+      gameData = {
+        "rolePlayed": role,
+        "happiness" : happiness
+      }
+      data['history'][-1].append(gameData)
     updateFile(data)
+    ct += 1
 
     # call again
     #TODO: validate input
     end = input("Do you want to play another match? (y/n)")
-    if (end == "y"):
+    if (end == "n"):
       done = True
 
-# def earlyStopping():
+def earlyStopping(data):
+  print("TODO:")
+
+
 
 def updateFile(data, file='data.json'):
-    json = json.dumps(data, indent=1)
+    toWrite = json.dumps(data, indent=1)
 
     with open(file, "w") as outfile:
-      outfile.write(json)
+      outfile.write(toWrite)
 
 def loadFile(file='data.json'):
   with open(file, "r") as openFile:
@@ -104,14 +131,23 @@ def init():
   data = loadFile()
   # get total games played
   ct = 0
-  for role in data.roles:
-    ct += role.n
-  # ask if we want to continue or reset
-  #TODO: validate input
-  reset = input(f"You have built this data set with {ct} games. Would you like to reset?(y/n)")
-  if reset == "y":
-  #   if continue go to loop()
-    resetModel()
-  #   if reset reset data and go to loop()
-    loop()
+  for role in data['roles']:
+    ct += role['n']
 
+  # ask if we want to continue or reset
+  if ct > 100:
+    choice = input(f"You have we have a good distrabution of how you play now. Would you like to move on to seeing how many games you should play in a session?")
+    if choice == "y":
+      earlyStopping(data)
+  else:
+    #TODO: validate input
+    reset = input(f"You have built this data set with {ct} games. Would you like to reset?(y/n)")
+    if reset == "y":
+    #   if reset reset data and go to loop()
+      resetModel()
+
+    data['history'].append([])
+    updatingLoop(data, ct)
+
+
+init()
