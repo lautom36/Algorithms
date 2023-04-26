@@ -4,7 +4,7 @@
 
   # monte carlo
 
-  # bayseian updating
+  # bayseian updating - decided it was reduntint 
 
   # loop
 
@@ -18,7 +18,7 @@ import numpy as np
 def getBest(roles):
   best = roles[0]
   for role in roles:
-    if role['avgHappy'] * role['priorProb'] > best['avgHappy'] * best['priorProb']:
+    if role['avgHappy']> best['avgHappy']:
       best = role
   return roles.index(best)
 
@@ -28,37 +28,28 @@ def monteCarlo(roles, epsilon):
   # get action
   if np.random.random() < epsilon:
     action = np.random.randint(len(roles))
+    # print('explore')
   else:
+    # print('exploit')
     action = getBest(roles)
 
   # return role to play
   return action
 
-def bayseianUpdating(actualVal, priorProb):
-    # Convert predicted and actual values to probabilities
-    # probPredicted = 1 / (1 + exp(-predictedVal))
-    probActual = 1 / (1 + exp(-actualVal))
-
-    # Compute likelihood of actual value given predicted value
-    likelihood = probActual * actualVal + (1 - probActual) * (1 - actualVal)
-
-    # Compute posterior probability
-    numerator = likelihood * priorProb
-    denominator = numerator + (1 - priorProb) * (1 - likelihood)
-    print('-----')
-    print(f"{numerator} + {1 - priorProb} * {1-likelihood} = {numerator + (1 - priorProb) * (1 - likelihood)}")
-    print('-----')
-    posteriorProb = numerator / denominator
-
-    return posteriorProb
+def getEpsilon(epsilon, ct):
+  newEps = .5 - (ct * .01)
+  if newEps < .01:
+    newEps = .01
+  return newEps
 
 def updatingLoop(data, ct):
-  epsilon = .01
   done = False
   while not done:
+    epsilon = getEpsilon(data, ct)
     # get role to play
     action = monteCarlo(data['roles'], epsilon)
     role = data['roles'][action]
+    history = data['history']
     print(f"For your next game queue {role['role']}")
 
     # wait for reported happyness
@@ -76,21 +67,24 @@ def updatingLoop(data, ct):
         print("Please enter a number")
 
     # use bayseian to update model
-    posteriorProb = bayseianUpdating(happiness, role['priorProb'])
     
     # update file
     newAvg = (role['n'] * role['avgHappy'] + happiness) / (role['n'] + 1)
-    role['priorProb'] = posteriorProb
     role['avgHappy'] = newAvg
     role['n'] += 1
     data['roles'][action] = role
 
-    if ct >= 100:
+    #TODO: change to 100
+    if ct >= 0:
       gameData = {
-        "rolePlayed": role,
+        "rolePlayed": role['role'],
         "happiness" : happiness
       }
-      data['history'][-1].append(gameData)
+      
+      history[-1].append(gameData)
+      # print('here')
+      # print(history)
+      # print(history[-1])
     updateFile(data)
     ct += 1
 
@@ -105,7 +99,7 @@ def earlyStopping(data):
     if len(session) > 3:
       for game in range(len(session)):
         
-  print("TODO:")
+        print("TODO:")
 
 
 
@@ -145,6 +139,7 @@ def init():
     if reset == "y":
     #   if reset reset data and go to loop()
       resetModel()
+      ct = 0
 
     data['history'].append([])
     updatingLoop(data, ct)
