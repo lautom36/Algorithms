@@ -2,72 +2,19 @@
  "roles": [
   {
    "role": "Tank",
-   "avgHappy": 4.333333333333333,
-   "n": 3
+   "avgHappy": 5,
+   "n": 0
   },
   {
    "role": "Dps",
-   "avgHappy": 5.0,
-   "n": 5
+   "avgHappy": 5,
+   "n": 0
   },
   {
    "role": "Support",
-   "avgHappy": 4.5,
-   "n": 4
+   "avgHappy": 5,
+   "n": 0
   }
  ],
- "history": [
-  [
-   {
-    "rolePlayed": "Support",
-    "happiness": 6.0
-   },
-   {
-    "rolePlayed": "Support",
-    "happiness": 5.0
-   },
-   {
-    "rolePlayed": "Support",
-    "happiness": 4.0
-   },
-   {
-    "rolePlayed": "Tank",
-    "happiness": 5.0
-   },
-   {
-    "rolePlayed": "Dps",
-    "happiness": 8.0
-   },
-   {
-    "rolePlayed": "Dps",
-    "happiness": 2.0
-   }
-  ],
-  [
-   {
-    "rolePlayed": "Tank",
-    "happiness": 4.0
-   },
-   {
-    "rolePlayed": "Dps",
-    "happiness": 6.0
-   },
-   {
-    "rolePlayed": "Dps",
-    "happiness": 2.0
-   },
-   {
-    "rolePlayed": "Support",
-    "happiness": 3.0
-   },
-   {
-    "rolePlayed": "Tank",
-    "happiness": 4.0
-   },
-   {
-    "rolePlayed": "Dps",
-    "happiness": 7.0
-   }
-  ]
- ]
+ "history": []
 }

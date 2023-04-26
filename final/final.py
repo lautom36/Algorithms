@@ -74,8 +74,7 @@ def updatingLoop(data, ct):
     role['n'] += 1
     data['roles'][action] = role
 
-    #TODO: change to 100
-    if ct >= 0:
+    if ct >= 100:
       gameData = {
         "rolePlayed": role['role'],
         "happiness" : happiness
@@ -95,13 +94,21 @@ def updatingLoop(data, ct):
       done = True
 
 def earlyStopping(data):
-  for session in range(len(data['history'])):
+  solutions = {}
+  for i in range(20):
+    solutions[str(i)] = 0
+
+  for i in range(len(data['history'])):
+    session = data['history'][i]
     if len(session) > 3:
-      for game in range(len(session)):
-        
-        print("TODO:")
+      for j in range(len(session)):
+        game = session[j]
 
+        if game['happiness'] >= 5:
+          solutions[str(j)] += 1
 
+  maxKey = max(solutions, key=solutions.get)
+  print(f'According to our data, you should stop playing after {int(maxKey) + 1} games\n')
 
 def updateFile(data, file='data.json'):
     toWrite = json.dumps(data, indent=1)
@@ -130,12 +137,12 @@ def init():
 
   # ask if we want to continue or reset
   if ct > 100:
-    choice = input(f"You have we have a good distrabution of how you play now. Would you like to move on to seeing how many games you should play in a session?")
+    choice = input(f"You have we have a good distrabution of how you play now. Would you like to move on to seeing how many games you should play in a session?(y/n) ")
     if choice == "y":
       earlyStopping(data)
   else:
     #TODO: validate input
-    reset = input(f"You have built this data set with {ct} games. Would you like to reset?(y/n)")
+    reset = input(f"You have built this data set with {ct} games. Would you like to reset?(y/n) ")
     if reset == "y":
     #   if reset reset data and go to loop()
       resetModel()
