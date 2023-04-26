@@ -40,16 +40,14 @@ def bayseianUpdating(actualVal, priorProb):
     probActual = 1 / (1 + exp(-actualVal))
 
     # Compute likelihood of actual value given predicted value
-    likelihood = probActual ** actualVal * (1 - probActual) ** (1 - actualVal)
+    likelihood = probActual * actualVal + (1 - probActual) * (1 - actualVal)
 
     # Compute posterior probability
     numerator = likelihood * priorProb
     denominator = numerator + (1 - priorProb) * (1 - likelihood)
-    print(numerator)
-    print(1 - priorProb)
-    print(1 - likelihood)
-    print((1 - priorProb) * (1 - likelihood))
-    print(numerator + (1 - priorProb) * (1 - likelihood))
+    print('-----')
+    print(f"{numerator} + {1 - priorProb} * {1-likelihood} = {numerator + (1 - priorProb) * (1 - likelihood)}")
+    print('-----')
     posteriorProb = numerator / denominator
 
     return posteriorProb
@@ -103,6 +101,10 @@ def updatingLoop(data, ct):
       done = True
 
 def earlyStopping(data):
+  for session in range(len(data['history'])):
+    if len(session) > 3:
+      for game in range(len(session)):
+        
   print("TODO:")
 
 
@@ -122,8 +124,6 @@ def resetModel():
   if reset == "y":
     initData = loadFile(file="initData.json")
     updateFile(initData)
-  else:
-    loop()
 
 # TODO: check if we want to collect data or do early stopping
 def init():
