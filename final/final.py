@@ -121,7 +121,7 @@ def loadFile(file='data.json'):
     return json.load(openFile)
   
 def resetModel():
-  reset = input(f"Are you sure?(y/n)")
+  reset = input(f"Are you sure?(y/n) ")
   if reset == "y":
     initData = loadFile(file="initData.json")
     updateFile(initData)
