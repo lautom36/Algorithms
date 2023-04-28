@@ -14,6 +14,7 @@
 import json
 from math import exp
 import numpy as np
+import matplotlib.pyplot as plt
 
 def getBest(roles):
   best = roles[0]
@@ -98,6 +99,9 @@ def earlyStopping(data):
 
   maxKey = max(solutions, key=solutions.get)
   print(f'According to our data, you should stop playing after {int(maxKey) + 1} games\n')
+  x, y = zip(*solutions.items())
+  plt.plot(x,y)
+  plt.show()
 
 def updateFile(data, file='data.json'):
     toWrite = json.dumps(data, indent=1)
