@@ -1,0 +1,176 @@
+{
+  "roles": [
+   {
+    "role": "Tank",
+    "avgHappy": 5.538461538461537,
+    "n": 39
+   },
+   {
+    "role": "Dps",
+    "avgHappy": 5.5348837209302335,
+    "n": 86
+   },
+   {
+    "role": "Support",
+    "avgHappy": 4.545454545454546,
+    "n": 11
+   }
+  ],
+  "history": [
+   [],
+   [],
+   [],
+   [
+    {
+     "rolePlayed": "Tank",
+     "happiness": 1.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 6.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 6.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 6.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 6.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 6.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 6.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 6.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 6.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 4.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 4.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 1.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 1.0
+    },
+    {
+     "rolePlayed": "Tank",
+     "happiness": 3.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 3.0
+    },
+    {
+     "rolePlayed": "Tank",
+     "happiness": 8.0
+    }
+   ],
+   [
+    {
+     "rolePlayed": "Tank",
+     "happiness": 3.0
+    },
+    {
+     "rolePlayed": "Tank",
+     "happiness": 6.0
+    },
+    {
+     "rolePlayed": "Tank",
+     "happiness": 5.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 7.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 9.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 4.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 9.0
+    }
+   ],
+   [
+    {
+     "rolePlayed": "Dps",
+     "happiness": 5.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 3.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 4.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 5.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 7.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 5.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 3.0
+    }
+   ],
+   [
+    {
+     "rolePlayed": "Dps",
+     "happiness": 4.0
+    },
+    {
+     "rolePlayed": "Tank",
+     "happiness": 6.0
+    },
+    {
+     "rolePlayed": "Tank",
+     "happiness": 5.0
+    },
+    {
+     "rolePlayed": "Tank",
+     "happiness": 6.0
+    },
+    {
+     "rolePlayed": "Tank",
+     "happiness": 4.0
+    },
+    {
+     "rolePlayed": "Dps",
+     "happiness": 4.0
+    }
+   ]
+  ]
+ }

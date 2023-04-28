@@ -23,14 +23,10 @@ def getBest(roles):
   return roles.index(best)
 
 def monteCarlo(roles, epsilon):
-  # do explore exploit step
-
   # get action
   if np.random.random() < epsilon:
     action = np.random.randint(len(roles))
-    # print('explore')
   else:
-    # print('exploit')
     action = getBest(roles)
 
   # return role to play
@@ -50,13 +46,12 @@ def updatingLoop(data, ct):
     action = monteCarlo(data['roles'], epsilon)
     role = data['roles'][action]
     history = data['history']
-    print(f"For your next game queue {role['role']}")
+    print(f"\nFor your next game queue {role['role']}")
 
     # wait for reported happyness
-    #TODO: validate input
     valid = False
     while not valid:
-      happiness = input("Enter happiness from last match: ")
+      happiness = input("Enter happiness from last match(1-10): ")
       if happiness.isnumeric():
         happiness = float(happiness)
         if happiness >= 0 and happiness <= 10:
@@ -65,8 +60,6 @@ def updatingLoop(data, ct):
           print("Please enter a number between 0 and 10")
       else:
         print("Please enter a number")
-
-    # use bayseian to update model
     
     # update file
     newAvg = (role['n'] * role['avgHappy'] + happiness) / (role['n'] + 1)
@@ -81,14 +74,10 @@ def updatingLoop(data, ct):
       }
       
       history[-1].append(gameData)
-      # print('here')
-      # print(history)
-      # print(history[-1])
     updateFile(data)
     ct += 1
 
     # call again
-    #TODO: validate input
     end = input("Do you want to play another match? (y/n)")
     if (end == "n"):
       done = True
@@ -126,7 +115,6 @@ def resetModel():
     initData = loadFile(file="initData.json")
     updateFile(initData)
 
-# TODO: check if we want to collect data or do early stopping
 def init():
   # read from data.txt
   data = loadFile()
@@ -138,10 +126,9 @@ def init():
   # ask if we want to continue or reset
   if ct > 100:
     choice = input(f"You have we have a good distrabution of how you play now. Would you like to move on to seeing how many games you should play in a session?(y/n) ")
-    if choice == "y":
-      earlyStopping(data)
+  if choice == "y":
+    earlyStopping(data)
   else:
-    #TODO: validate input
     reset = input(f"You have built this data set with {ct} games. Would you like to reset?(y/n) ")
     if reset == "y":
     #   if reset reset data and go to loop()
