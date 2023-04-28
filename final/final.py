@@ -128,6 +128,9 @@ def init():
     choice = input(f"You have we have a good distrabution of how you play now. Would you like to move on to seeing how many games you should play in a session?(y/n) ")
   if choice == "y":
     earlyStopping(data)
+
+    data['history'].append([])
+    updatingLoop(data, ct)
   else:
     reset = input(f"You have built this data set with {ct} games. Would you like to reset?(y/n) ")
     if reset == "y":
