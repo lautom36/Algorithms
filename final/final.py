@@ -130,11 +130,13 @@ def init():
   # ask if we want to continue or reset
   if ct > 100:
     choice = input(f"You have we have a good distrabution of how you play now. Would you like to move on to seeing how many games you should play in a session?(y/n) ")
-  if choice == "y":
-    earlyStopping(data)
+    if choice == "y":
+      earlyStopping(data)
 
-    data['history'].append([])
-    updatingLoop(data, ct)
+    choice = input(f"Would you like to play some more games?(y/n) ")
+    if choice == "y":
+      data['history'].append([])
+      updatingLoop(data, ct)
   else:
     reset = input(f"You have built this data set with {ct} games. Would you like to reset?(y/n) ")
     if reset == "y":
